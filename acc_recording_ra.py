@@ -1,6 +1,7 @@
 # Python script to record the ADXL345 accelerometer data into a text file.
 # Author: Narutoshi Nakata
 # License: Tokushima University
+# branch_testと計測開始時刻の出力
 import os
 import time
 from datetime import datetime
@@ -8,10 +9,13 @@ from datetime import datetime
 # Import the ADXL345 module.
 import Adafruit_ADXL345
 
+#計測開始時刻を出力する
 now = datetime.now()
+now2 = str(now)+"\n" #str型に変更し、改行する
+#now3 = str(datetime.now()) + "\n"
 filename = "data"+now.strftime("%Y-%m-%d_%H-%M")+".txt"
 print(filename)
-print(now)
+
 #ファイル名をdata+連番.txtとする
 dir = '../data'
 count_file = sum(os.path.isfile(os.path.join(dir, name)) for name in os.listdir(dir))
@@ -54,6 +58,7 @@ print(sf)
 accel.set_data_rate(Adafruit_ADXL345.ADXL345_DATARATE_800_HZ)
 
 F = open('../data/'+filename,'w')
+F.write(now2) #計測開始時刻をファイルに出力する
 print('Press ctrl-c to stop recording...')
 start_time = time.time()
 try:
